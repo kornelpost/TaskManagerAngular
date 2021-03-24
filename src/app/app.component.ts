@@ -7,7 +7,8 @@ import { Task } from './task'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  config: { [key: string]: string} | null = null;
+  taskName: string = '';
+  config: { [key: string]: string } | null = null;
   tasks: Task[] = [
     {
       name: "Siłownia",
@@ -27,7 +28,7 @@ export class AppComponent {
   ];
 
   constructor() {
-    setTimeout( () => {
+    setTimeout(() => {
       this.config = {
         title: 'Lista zadań',
         footer: '© Lista zadań zbudowana w Angularze.',
@@ -35,8 +36,23 @@ export class AppComponent {
       };
     }, 500);
   }
-  
+
   clearTasks() {
     this.tasks = [];
+  }
+
+  onKeyUp(event: KeyboardEvent) {
+    const target = event.target as HTMLInputElement;
+    this.taskName = target.value;
+    console.log(target.value);
+  }
+
+  createTask() {
+    const task: Task = {
+      name: this.taskName,
+      deadline: '2021-01-01',
+      done: false,
+    };
+    this.tasks.push(task);
   }
 }
